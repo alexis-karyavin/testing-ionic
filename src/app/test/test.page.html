@@ -6,6 +6,27 @@
 
 <ion-content>
   <div id="container">
-    1. kfkfkfkfk
+    <div *ngIf="index <= result.countQuestions - 1; then testBlock; else resultBlock">
+    </div>
+    <ng-template #testBlock class="test-container" >
+      <ion-radio-group value="grape">
+        <ion-list-header>
+          <ion-label>
+            {{index + 1}}. {{ data[index]?.question }}
+          </ion-label>
+        </ion-list-header>
+        <ion-item *ngFor="let item of data[index]?.answers">
+          <ion-label>{{item.answer}}</ion-label>
+          <ion-radio slot="start" (ionFocus)="changeRadio(item.right)" value="{{item.id}}"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+      <ion-button color="primary" (click)="nextAnswer()">Ответить</ion-button>
+    </ng-template>
+    <ng-template #resultBlock>
+      <p>
+        Ваш результат: {{result.countRight}}/{{result.countQuestions}}.
+      </p>
+      <ion-button color="primary" [routerLink]="'/home'">Начать заново</ion-button>
+    </ng-template>
   </div>
 </ion-content>
